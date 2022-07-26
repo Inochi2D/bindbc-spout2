@@ -1,0 +1,11 @@
+name "bindbc-spout2"
+description "SpoutLibrary binding for D"
+authors "Luna"
+copyright "Copyright © 2022, Luna"
+license "BSD 2-clause"
+dependency "bindbc-loader" version="~>1.0.1"
+
+targetPath "out/"
+
+copyFiles "libs/x86/SpoutLibrary.dll" platform="windows-x86"
+copyFiles "libs/x86_64/SpoutLibrary.dll" platform="windows-x86_64"
