@@ -19,6 +19,12 @@ private extern(C) @nogc nothrow {
     alias _spGetHandle = HANDLE function(SPOUTHANDLE self);
     alias _spGetCPU = bool function(SPOUTHANDLE self);
     alias _spGetGLDX = bool function(SPOUTHANDLE self);
+    alias _spGetSenderCount = int function(SPOUTHANDLE self);
+    alias _spGetSender = bool function(SPOUTHANDLE self, int index, char* sendername, int MaxSize);
+    alias _spFindSenderName = bool function(SPOUTHANDLE self, char* sendername);
+    alias _spGetSenderInfo = bool function(SPOUTHANDLE self, const(char)* sendername, ref uint width, ref uint height, ref HANDLE dxShareHandle, ref DWORD dwFormat);
+    alias _spGetActiveSender = bool function(SPOUTHANDLE self, char* sendername);
+    alias _spSetActiveSender = bool function(SPOUTHANDLE self, char* sendername);
 }
 
 __gshared {
@@ -37,6 +43,12 @@ __gshared {
     _spGetHandle spGetHandle;
     _spGetCPU spGetCPU;
     _spGetGLDX spGetGLDX;
+    _spGetSenderCount spGetSenderCount;
+    _spGetSender spGetSender;
+    _spFindSenderName spFindSenderName;
+    _spGetSenderInfo spGetSenderInfo;
+    _spGetActiveSender spGetActiveSender;
+    _spSetActiveSender spSetActiveSender;
 }
 
 enum Spout2Support {
@@ -100,6 +112,13 @@ Spout2Support loadSpout2(const(char)* libName) {
     lib.bindSymbol(cast(void**)&spGetHandle, "spGetHandle");
     lib.bindSymbol(cast(void**)&spGetCPU, "spGetCPU");
     lib.bindSymbol(cast(void**)&spGetGLDX, "spGetGLDX");
+    
+    lib.bindSymbol(cast(void**)&spGetSenderCount, "spGetSenderCount");
+    lib.bindSymbol(cast(void**)&spGetSender, "spGetSender");
+    lib.bindSymbol(cast(void**)&spFindSenderName, "spFindSenderName");
+    lib.bindSymbol(cast(void**)&spGetSenderInfo, "spGetSenderInfo");
+    lib.bindSymbol(cast(void**)&spGetActiveSender, "spGetActiveSender");
+    lib.bindSymbol(cast(void**)&spSetActiveSender, "spSetActiveSender");
 
     return Spout2Support.spout2;
 }
